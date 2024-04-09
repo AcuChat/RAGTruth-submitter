@@ -10,9 +10,14 @@ const sliceInfo = createSlice({
             state.sourceInfo = action.payload;
             return state;
         },
+        infoSetResponse: (state, action) => {
+            state.response = action.payload;
+            return state;
+        },
+        
     }
 });
 
-export const {infoSetSourceInfo } = sliceInfo.actions;
+export const {infoSetSourceInfo, infoSetResponse } = sliceInfo.actions;
 
 export default sliceInfo.reducer;

@@ -5,7 +5,7 @@ import './App.css'
 import { useDispatch, useSelector } from 'react-redux';
 import { counterDecrement, counterIncrement, counterSetValue } from './store/sliceCounter';
 import axios from 'axios';
-import { infoSetSourceInfo } from './store/sliceInfo';
+import { infoSetResponse, infoSetSourceInfo } from './store/sliceInfo';
 
 function App() {
   const dispatch = useDispatch();
@@ -21,14 +21,31 @@ function App() {
       for (let i = 0; i < lines.length; ++i) {
         try {
           const obj = JSON.parse(lines[i]);
-          if (obj.task_type === 'QA') sourceInfo.push(JSON.parse(lines[i]));
+          if (obj.task_type === 'QA') sourceInfo.push(obj);
         } catch (err) {
           console.error('Could not push ', i);
         }
       }
       dispatch(infoSetSourceInfo(sourceInfo));
     })
-    .catch(err => console.error(err))
+    .catch(err => console.error(err));
+
+    axios.get('https://www.michaelcalvinwood.net/datasets/RAGTruth/response.jsonl')
+    .then(response => {
+      const lines = response.data.split("\n");
+      console.log('lines[0]', lines[0])
+      const responseArr = [];
+      for (let i = 0; i < lines.length; ++i) {
+        try {
+          const obj = JSON.parse(lines[i]);
+          responseArr.push(obj);
+        } catch (err) {
+          console.error('Could not push ', i);
+        }
+      }
+      dispatch(infoSetResponse(responseArr));
+    })
+    .catch(err => console.error(err));
   }, [])
   return (
     <>
