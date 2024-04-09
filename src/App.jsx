@@ -5,6 +5,7 @@ import './App.css'
 import { useDispatch, useSelector } from 'react-redux';
 import { counterDecrement, counterIncrement, counterSetValue } from './store/sliceCounter';
 import axios from 'axios';
+import { infoSetSourceInfo } from './store/sliceInfo';
 
 function App() {
   const dispatch = useDispatch();
@@ -25,7 +26,7 @@ function App() {
           console.error('Could not push ', i);
         }
       }
-      console.log(sourceInfo)
+      dispatch(infoSetSourceInfo(sourceInfo));
     })
     .catch(err => console.error(err))
   }, [])

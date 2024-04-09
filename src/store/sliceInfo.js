@@ -7,7 +7,7 @@ const sliceInfo = createSlice({
     initialState: init,
     reducers: {
         infoSetSourceInfo: (state, action) => {
-            state.sourceInfo = action;
+            state.sourceInfo = action.payload;
             return state;
         },
     }
