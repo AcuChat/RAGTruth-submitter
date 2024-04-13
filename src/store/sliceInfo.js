@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-const init = {sourceInfo: [], response: []}
+const init = {sourceInfo: [], response: [], tables: []}
 
 const sliceInfo = createSlice({
     name: 'info',
@@ -14,10 +14,14 @@ const sliceInfo = createSlice({
             state.response = action.payload;
             return state;
         },
+        infoSetTables: (state, action) => {
+            state.tables = action.payload;
+            return state;
+        }
         
     }
 });
 
-export const {infoSetSourceInfo, infoSetResponse } = sliceInfo.actions;
+export const {infoSetSourceInfo, infoSetResponse, infoSetTables } = sliceInfo.actions;
 
 export default sliceInfo.reducer;
