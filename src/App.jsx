@@ -14,38 +14,9 @@ function App() {
   
 
   useEffect(() => {
-    axios.get('https://www.michaelcalvinwood.net/datasets/RAGTruth/source_info.jsonl')
-    .then(response => {
-      const lines = response.data.split("\n");
-      const sourceInfo = [];
-      for (let i = 0; i < lines.length; ++i) {
-        try {
-          const obj = JSON.parse(lines[i]);
-          if (obj.task_type === 'QA') sourceInfo.push(obj);
-        } catch (err) {
-          console.error('Could not push ', i);
-        }
-      }
-      dispatch(infoSetSourceInfo(sourceInfo));
-    })
-    .catch(err => console.error(err));
-
-    axios.get('https://www.michaelcalvinwood.net/datasets/RAGTruth/response.jsonl')
-    .then(response => {
-      const lines = response.data.split("\n");
-      console.log('lines[0]', lines[0])
-      const responseArr = [];
-      for (let i = 0; i < lines.length; ++i) {
-        try {
-          const obj = JSON.parse(lines[i]);
-          responseArr.push(obj);
-        } catch (err) {
-          console.error('Could not push ', i);
-        }
-      }
-      dispatch(infoSetResponse(responseArr));
-    })
-    .catch(err => console.error(err));
+   axios.get("https://acurai.ai:5100/tables")
+   .then(response => console.log(response.data))
+   .catch(err => console.error(err));
   }, [])
   return (
     <>
