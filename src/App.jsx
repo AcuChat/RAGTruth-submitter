@@ -12,12 +12,16 @@ function App() {
   const count = useSelector(state => state.counter)
   const info = useSelector(state => state.info);
   
+  const getTableInfo = tableName => {
+    console.log(tableName);
+  }
 
   useEffect(() => {
    axios.get("https://acurai.ai:5100/tables")
    .then(response => {
     const tables = response.data.map(t => t.Tables_in_ragtruth);
     dispatch(infoSetTables(tables));
+    if (tables.length) getTableInfo(tables[0]);
 
    })
    .catch(err => console.error(err));
@@ -25,7 +29,7 @@ function App() {
   return (
     <>
       <div className="selectContainer">
-        <select name="tables" id="tables">
+        <select name="tables" id="tables" onChange={e => getTableInfo(e.target.value)}>
           {info.tables.map((t, i) => {
             return <option key={t} value={t}>{t}</option>
           })}
