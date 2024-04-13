@@ -10,7 +10,7 @@ import { infoSetResponse, infoSetSourceInfo, infoSetTables } from './store/slice
 function App() {
   const dispatch = useDispatch();
   const count = useSelector(state => state.counter)
-  
+  const info = useSelector(state => state.info);
   
 
   useEffect(() => {
@@ -26,7 +26,9 @@ function App() {
     <>
       <div className="selectContainer">
         <select name="tables" id="tables">
-
+          {info.tables.map((t, i) => {
+            return <option key={t} value={t}>{t}</option>
+          })}
         </select>
       </div>
       <input type="number" onChange={e => dispatch(counterSetValue(e.target.value))} />
