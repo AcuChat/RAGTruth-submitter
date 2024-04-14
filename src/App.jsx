@@ -1,11 +1,8 @@
 import { useEffect, useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
+
 import { useDispatch, useSelector } from 'react-redux';
-import { counterDecrement, counterIncrement, counterSetValue } from './store/sliceCounter';
 import axios from 'axios';
-import { infoSetResponse, infoSetSourceInfo, infoSetTables } from './store/sliceInfo';
 
 function App() {
   const dispatch = useDispatch();
@@ -28,6 +25,7 @@ function App() {
   }, [])
   return (
     <>
+      <h1 className="text-blue-600">Hello</h1>
       <div className="selectContainer">
         <select name="tables" id="tables" onChange={e => getTableInfo(e.target.value)}>
           {info.tables.map((t, i) => {
