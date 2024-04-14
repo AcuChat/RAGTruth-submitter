@@ -58,11 +58,11 @@ function App() {
         <FaArrowCircleRight size={32} onClick={() => dispatch(infoIncrementDataIndex())}/>
       </div>
       {data.length && <div id="responseWindows" className='flex flex-row justify-between w-screen mt-4'>
-          <div id="acuraiResponse" className="w-11/12">
+          <div id="acuraiResponse" className="w-11/12 px-4">
             {data[info.dataIndex]?.package?.Acurai}
           </div>
-          <div className="origResponse w-11/12">
-            Orig
+          <div className="origResponse w-11/12 px-4">
+            {data[info.dataIndex]?.package?.origResponse}
           </div>
        </div>
       }
