@@ -5,6 +5,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import { infoSetData, infoSetTables } from './store/sliceInfo';
 
+import { FaArrowCircleLeft } from "react-icons/fa";
+import { FaArrowCircleRight } from "react-icons/fa";
+
 function App() {
   const dispatch = useDispatch();
   const count = useSelector(state => state.counter)
@@ -47,6 +50,10 @@ function App() {
             return <option key={t} value={t}>{t}</option>
           })}
         </select>
+      </div>
+      <div id="buttonControls" className='flex flex-row justify-center mt-3 cursor-pointer'>
+        <FaArrowCircleLeft size={32} className='mr-3'/>
+        <FaArrowCircleRight size={32}/>
       </div>
     </>
   )
