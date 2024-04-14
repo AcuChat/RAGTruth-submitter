@@ -12,6 +12,8 @@ function App() {
   const dispatch = useDispatch();
   const count = useSelector(state => state.counter)
   const info = useSelector(state => state.info);
+  const {data} = info;
+  console.log('data', data);
   
   let accuracy = 0;
 
@@ -42,7 +44,7 @@ function App() {
    .catch(err => console.error(err));
   }, [])
   return (
-    <>
+    <div className='w-100 fixed top-0 left-0'>
       <h1 className="text-blue-600 mb-4">Accuracy {accuracy}%</h1>
       <div className="selectContainer">
         <select name="tables" id="tables" onChange={e => getData(e.target.value)} className="block w-full px-4 py-3 text-base text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
@@ -55,7 +57,16 @@ function App() {
         <FaArrowCircleLeft size={32} className='mr-3' onClick={() => dispatch(infoDecrementDataIndex())}/>
         <FaArrowCircleRight size={32} onClick={() => dispatch(infoIncrementDataIndex())}/>
       </div>
-    </>
+      {data.length && <div id="responseWindows" className='flex flex-row justify-between w-screen mt-4'>
+          <div id="acuraiResponse" className="w-11/12">
+            {data[info.dataIndex]?.package?.Acurai}
+          </div>
+          <div className="origResponse w-11/12">
+            Orig
+          </div>
+       </div>
+      }
+    </div>
   )
 }
 
