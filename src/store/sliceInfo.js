@@ -22,10 +22,19 @@ const sliceInfo = createSlice({
             state.data = action.payload;
             state.dataIndex = 0;
             return state;
-        }
+        },
+        infoIncrementDataIndex: (state, action) => {
+            if (state.dataIndex < state.data.length - 1) ++state.dataIndex;
+            return state;
+        },
+        infoDecrementDataIndex: (state, action) => {
+            if (state.dataIndex > 0) --state.dataIndex;
+            return state;
+        },
+        
     }
 });
 
-export const {infoSetSourceInfo, infoSetResponse, infoSetTables, infoSetData } = sliceInfo.actions;
+export const {infoSetSourceInfo, infoSetResponse, infoSetTables, infoSetData, infoIncrementDataIndex, infoDecrementDataIndex } = sliceInfo.actions;
 
 export default sliceInfo.reducer;
