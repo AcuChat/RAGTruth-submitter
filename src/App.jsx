@@ -3,25 +3,37 @@ import './App.css'
 
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
-import { infoSetTables } from './store/sliceInfo';
+import { infoSetData, infoSetTables } from './store/sliceInfo';
 
 function App() {
   const dispatch = useDispatch();
   const count = useSelector(state => state.counter)
   const info = useSelector(state => state.info);
   
-  const getTableInfo = tableName => {
-    console.log(tableName);
-  }
-
   let accuracy = 0;
+
+  const getData = tableName => {
+    const request = {
+      url: "https://acurai.ai:5100/data",
+      method: 'post',
+      data: {
+        tableName
+      }
+    }
+
+    axios(request)
+    .then(response => {
+      dispatch(infoSetData(response.data));
+    })
+    .catch(err => console.error(err));
+  }
 
   useEffect(() => {
    axios.get("https://acurai.ai:5100/tables")
    .then(response => {
     const tables = response.data.map(t => t.Tables_in_ragtruth);
     dispatch(infoSetTables(tables));
-    if (tables.length) getTableInfo(tables[0]);
+    if (tables.length) getData(tables[0]);
 
    })
    .catch(err => console.error(err));
@@ -36,7 +48,6 @@ function App() {
           })}
         </select>
       </div>
-      <input type="number" onChange={e => dispatch(counterSetValue(e.target.value))} />
     </>
   )
 }

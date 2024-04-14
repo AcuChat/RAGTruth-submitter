@@ -17,11 +17,14 @@ const sliceInfo = createSlice({
         infoSetTables: (state, action) => {
             state.tables = action.payload;
             return state;
+        },
+        infoSetData: (state, action) => {
+            state.data = action.payload;
+            return state;
         }
-        
     }
 });
 
-export const {infoSetSourceInfo, infoSetResponse, infoSetTables } = sliceInfo.actions;
+export const {infoSetSourceInfo, infoSetResponse, infoSetTables, infoSetData } = sliceInfo.actions;
 
 export default sliceInfo.reducer;
