@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-const init = {sourceInfo: [], response: [], tables: []}
+const init = {sourceInfo: [], response: [], tables: [], data: [], dataIndex: 0}
 
 const sliceInfo = createSlice({
     name: 'info',
@@ -20,6 +20,7 @@ const sliceInfo = createSlice({
         },
         infoSetData: (state, action) => {
             state.data = action.payload;
+            state.dataIndex = 0;
             return state;
         }
     }
