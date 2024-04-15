@@ -31,10 +31,16 @@ const sliceInfo = createSlice({
             if (state.dataIndex > 0) --state.dataIndex;
             return state;
         },
+        infoAcuraiSelection: (state, action) => {
+            if (action.payload) {
+                state.data[state.dataIndex].acuraiSelection = action.payload;
+                return state;
+            }
+        }
         
     }
 });
 
-export const {infoSetSourceInfo, infoSetResponse, infoSetTables, infoSetData, infoIncrementDataIndex, infoDecrementDataIndex } = sliceInfo.actions;
+export const {infoSetSourceInfo, infoSetResponse, infoSetTables, infoSetData, infoIncrementDataIndex, infoDecrementDataIndex, infoAcuraiSelection } = sliceInfo.actions;
 
 export default sliceInfo.reducer;

@@ -3,7 +3,7 @@ import './App.css'
 
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
-import { infoDecrementDataIndex, infoIncrementDataIndex, infoSetData, infoSetTables } from './store/sliceInfo';
+import { infoAcuraiSelection, infoDecrementDataIndex, infoIncrementDataIndex, infoSetData, infoSetTables } from './store/sliceInfo';
 
 import { FaArrowCircleLeft } from "react-icons/fa";
 import { FaArrowCircleRight } from "react-icons/fa";
@@ -15,7 +15,28 @@ function App() {
   const {data} = info;
   console.log('data', data);
   
+  let disparities = '';
+  let origResponse = '';
+  let acuraiResponse = '';
+
+  if (data.length) {
+    origResponse = data[info.dataIndex].package.origResponse;
+    acuraiResponse = data[info.dataIndex]?.package?.Acurai;
+
+    const dInfo = data[info.dataIndex].package.disparities;
+    for (let i = 0; i < dInfo.length; ++i) {
+      disparities += dInfo[i].meta + "<br>";
+      origResponse = origResponse.replace(dInfo[i].text, `<span style="color: red">${dInfo[i].text}</span>`)
+    }
+  }
+
   let accuracy = 0;
+
+  const getSelection = () => {
+    let selectedText = window.getSelection().toString();
+    if (selectedText) dispatch(infoAcuraiSelection(selectedText));
+    console.log(selectedText);
+  }
 
   const getData = tableName => {
     const request = {
@@ -43,6 +64,17 @@ function App() {
    })
    .catch(err => console.error(err));
   }, [])
+
+  useEffect(() => {
+    document.addEventListener('mouseup', getSelection);
+    //document.addEventListener('selectionchange', getSelection);
+
+    return () => {
+      document.addEventListener('mouseup', getSelection);
+      //document.addEventListener('selectionchange', getSelection);
+    }
+  })
+
   return (
     <div className='w-100 fixed top-0 left-0'>
       <h1 className="text-blue-600 mb-4">Accuracy {accuracy}%</h1>
@@ -57,14 +89,39 @@ function App() {
         <FaArrowCircleLeft size={32} className='mr-3' onClick={() => dispatch(infoDecrementDataIndex())}/>
         <FaArrowCircleRight size={32} onClick={() => dispatch(infoIncrementDataIndex())}/>
       </div>
-      {data.length && <div id="responseWindows" className='flex flex-row justify-between w-screen mt-4'>
-          <div id="acuraiResponse" className="w-11/12 px-4">
-            {data[info.dataIndex]?.package?.Acurai}
+      {data.length && <>
+
+        <div id="disparities" className="text-blue-600" dangerouslySetInnerHTML={{__html: disparities}}>
+      
+
+        </div>
+        <div className='flex flex-row justify-start ml-4'>
+         
+        </div>
+        <div id="responseWindows" className='flex flex-row justify-between w-screen mt-4'>
+
+          <div className="origResponse w-11/12 px-4">
+          <label className="inline-flex items-center cursor-pointer">
+              <input type="checkbox" value="" className="sr-only peer" checked={true} />
+              <div className="relative w-11 h-6 bg-gray-200 rounded-full peer peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
+              {/* <span className="ms-3 font-medium text-gray-900 dark:text-gray-300">Acurai is Correct</span> */}
+            </label>
+            <h2 className='text-lg font-bold'>Acurai</h2>
+            
+            <p className='text-left' dangerouslySetInnerHTML={{__html: acuraiResponse}}></p>
           </div>
           <div className="origResponse w-11/12 px-4">
-            {data[info.dataIndex]?.package?.origResponse}
+          <label className="inline-flex items-center cursor-pointer invisible">
+              <input type="checkbox" value="" className="sr-only peer" checked={true} />
+              <div className="relative w-11 h-6 bg-gray-200 rounded-full peer peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
+              {/* <span className="ms-3 font-medium text-gray-900 dark:text-gray-300">Acurai is Correct</span> */}
+            </label>
+            <h2 className='text-lg font-bold'>Original</h2>
+            <p className='text-left' dangerouslySetInnerHTML={{__html: origResponse}}></p>
           </div>
        </div>
+       
+      </>
       }
     </div>
   )
