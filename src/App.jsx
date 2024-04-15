@@ -94,6 +94,7 @@ function App() {
       </div>
       {data.length && <>
 
+        <div className='text-blue-600 font-bold mt-4'>{data[info.dataIndex].package.question}</div>
         <div id="disparities" className="text-blue-600" dangerouslySetInnerHTML={{__html: disparities}}>
       
 
