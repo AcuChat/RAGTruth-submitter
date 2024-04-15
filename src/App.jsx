@@ -26,8 +26,11 @@ function App() {
     const dInfo = data[info.dataIndex].package.disparities;
     for (let i = 0; i < dInfo.length; ++i) {
       disparities += dInfo[i].meta + "<br>";
-      origResponse = origResponse.replace(dInfo[i].text, `<span style="color: red">${dInfo[i].text}</span>`)
+      origResponse = origResponse.replace(dInfo[i].text, `<span style="color: red; font-weight: 700;">${dInfo[i].text}</span>`)
     }
+
+    const acuraiSelection = data[info.dataIndex].acuraiSelection ? data[info.dataIndex].acuraiSelection : '';
+    if (acuraiSelection) acuraiResponse = acuraiResponse.replace(acuraiSelection, `<span style="color: green; font-weight: 700;">${acuraiSelection}</span>`)
   }
 
   let accuracy = 0;
