@@ -121,7 +121,7 @@ function App() {
               {/* <span className="ms-3 font-medium text-gray-900 dark:text-gray-300">Acurai is Correct</span> */}
             </label>
             <h2 className='text-lg font-bold'>{data[info.dataIndex].package.model}</h2>
-            <p className='text-left' dangerouslySetInnerHTML={{__html: origResponse}}></p>
+            <p className='text-left' dangerouslySetInnerHTML={{__html: origResponse.replaceAll("\n", "<br>")}}></p>
           </div>
 
           <div className="acuraiResponse px-4">
@@ -132,7 +132,7 @@ function App() {
             </label>
             <h2 className='text-lg font-bold'>acurai-{data[info.dataIndex].package.model}</h2>
             
-            <p className='text-left' dangerouslySetInnerHTML={{__html: acuraiResponse}}></p>
+            <p className='text-left' dangerouslySetInnerHTML={{__html: acuraiResponse.replaceAll("\n", "<br>")}}></p>
           </div>
        </div>
        <div id="passages">
