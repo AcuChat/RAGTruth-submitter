@@ -9,6 +9,8 @@ import { FaArrowCircleLeft } from "react-icons/fa";
 import { FaArrowCircleRight } from "react-icons/fa";
 
 function App() {
+  const llmKey = import.meta.env.VITE_LLMKEY;
+
   const [showPassages, setShowPassages] = useState(false);
 
   const dispatch = useDispatch();
@@ -61,6 +63,28 @@ function App() {
       dispatch(infoSetData(response.data));
     })
     .catch(err => console.error(err));
+  }
+
+  const redo = async () => {
+    // prompt, chunks, llmKey, model, settings { temperature: 0.7 }
+    const pkg = dataPoint.package;
+
+    const request = {
+      url: 'https://acur.ai/rag-response',
+      method: 'post',
+      data: {
+        prompt: pkg.question,
+        chunks: pkg.contexts,
+        llmKey,
+        model: pkg.model,
+        settings: {
+          temperature: 0.7
+        }
+      }
+    }
+
+    const response = await axios(request);
+    console.log(response.data);
   }
 
   useEffect(() => {
@@ -136,7 +160,7 @@ function App() {
             <p className='text-left' dangerouslySetInnerHTML={{__html: acuraiResponse.replaceAll("\n", "<br>")}}></p>
           </div>
        </div>
-       <div id="redoButton" className="mt-4 mx-auto text-black border border-black cursor-pointer bg-white">Redo</div>
+       <div id="redoButton" className="mt-4 mx-auto text-black border border-black cursor-pointer bg-white" onClick={redo}>Redo</div>
        <div id="passages">
         <div id="passagesButton" className={showPassages ? 'mt-1 mb-1 mx-auto text-white bg-black border border-black cursor-pointer mt-4' : 'mt-1 mb-1 mx-auto text-black bg-white cursor-pointer border border-black'} onClick={() => setShowPassages(cur => !cur)}>Passages</div>
         {showPassages && <>
