@@ -21,20 +21,21 @@ function App() {
   let origResponse = '';
   let acuraiResponse = '';
   let passages = [];
-  
+  let dataPoint = null;
+
   if (data.length) {
+    dataPoint = data[info.dataIndex];
+    passages = dataPoint.package.passages;
+    origResponse = dataPoint.package.origResponse;
+    acuraiResponse = dataPoint?.package?.Acurai;
 
-    passages = data[info.dataIndex].package.passages;
-    origResponse = data[info.dataIndex].package.origResponse;
-    acuraiResponse = data[info.dataIndex]?.package?.Acurai;
-
-    const dInfo = data[info.dataIndex].package.disparities;
+    const dInfo = dataPoint.package.disparities;
     for (let i = 0; i < dInfo.length; ++i) {
       disparities += dInfo[i].meta + "<br>";
       origResponse = origResponse.replace(dInfo[i].text, `<span style="color: rgb(220 38 38); font-weight: 700;">${dInfo[i].text}</span>`)
     }
 
-    const acuraiSelection = data[info.dataIndex].acuraiSelection ? data[info.dataIndex].acuraiSelection : '';
+    const acuraiSelection = dataPoint.acuraiSelection ? dataPoint.acuraiSelection : '';
     if (acuraiSelection) acuraiResponse = acuraiResponse.replace(acuraiSelection, `<span style="color: green; font-weight: 700;">${acuraiSelection}</span>`)
   }
 
@@ -99,9 +100,9 @@ function App() {
         <FaArrowCircleRight size={32} onClick={() => dispatch(infoIncrementDataIndex())}/>
       </div>
       {data.length && <>
-
+        <div className='mt-4'>Response ID:  {dataPoint?.package?.responseId}</div>
         <div className='border mx-4 mt-2 border-black rounded-md'>
-          <div className='text-blue-600 font-bold mt-4'>{data[info.dataIndex].package.question}</div>
+          <div className='text-blue-600 font-bold mt-4'>{dataPoint.package.question}</div>
           {/* <div className="text-blue-600 italic text-sm mb-4">{data[info.dataIndex].package.model}</div> */}
           <div id="disparities" className="font-bold text-red-600 text-left px-4 mb-2" dangerouslySetInnerHTML={{__html: disparities.replaceAll('SUBTLE CONFLICT', '[SUBTLE CONFLICT]').replaceAll('Original:', 'Context:')}}>
         </div>
