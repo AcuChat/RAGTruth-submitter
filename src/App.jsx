@@ -100,7 +100,7 @@ function App() {
         <FaArrowCircleRight size={32} onClick={() => dispatch(infoIncrementDataIndex())}/>
       </div>
       {data.length && <>
-        <div className='mt-4'>Response ID:  {dataPoint?.package?.responseId}</div>
+        <div className='mt-4'><b>Response ID:</b>  {dataPoint?.package?.responseId}</div>
         <div className='border mx-4 mt-2 border-black rounded-md'>
           <div className='text-blue-600 font-bold mt-4'>{dataPoint.package.question}</div>
           {/* <div className="text-blue-600 italic text-sm mb-4">{data[info.dataIndex].package.model}</div> */}
@@ -139,6 +139,7 @@ function App() {
        <div id="passages">
         <div id="passagesButton" className={showPassages ? 'text-white bg-black border border-black cursor-pointer mt-4' : 'mt-4 text-black bg-white cursor-pointer border border-black'} onClick={() => setShowPassages(cur => !cur)}>Passages</div>
         {showPassages && <>
+          <b>Source ID:</b> {dataPoint?.package?.sourceId}
           {passages.map(p => <p className='text-left my-4 px-4'>{p}</p>)}
           </>
         }
