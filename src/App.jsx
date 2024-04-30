@@ -136,8 +136,9 @@ function App() {
             <p className='text-left' dangerouslySetInnerHTML={{__html: acuraiResponse.replaceAll("\n", "<br>")}}></p>
           </div>
        </div>
+       <div id="redoButton" className="mt-4 mx-auto text-black border border-black cursor-pointer bg-white">Redo</div>
        <div id="passages">
-        <div id="passagesButton" className={showPassages ? 'text-white bg-black border border-black cursor-pointer mt-4' : 'mt-4 text-black bg-white cursor-pointer border border-black'} onClick={() => setShowPassages(cur => !cur)}>Passages</div>
+        <div id="passagesButton" className={showPassages ? 'mt-1 mb-1 mx-auto text-white bg-black border border-black cursor-pointer mt-4' : 'mt-1 mb-1 mx-auto text-black bg-white cursor-pointer border border-black'} onClick={() => setShowPassages(cur => !cur)}>Passages</div>
         {showPassages && <>
           <b>Source ID:</b> {dataPoint?.package?.sourceId}
           {passages.map(p => <p className='text-left my-4 px-4'>{p}</p>)}
